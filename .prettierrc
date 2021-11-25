@@ -1,0 +1,5 @@
+{
+    tabWidth: 2,
+    singleQuote: 2,
+    trailingComma: "all"
+}
