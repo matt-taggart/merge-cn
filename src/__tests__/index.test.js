@@ -74,12 +74,54 @@ describe('Arrays', () => {
   });
 });
 
+describe('Object', () => {
+  test('empty object', () => {
+    expect(cn({})).toBe('');
+  });
+
+  test('single truthy value', () => {
+    expect(cn({ foo: true })).toBe('foo');
+  });
+
+  test('single falsy value', () => {
+    expect(cn({ foo: false })).toBe('');
+  });
+
+  test('multiple truthy key-value pairs passed as one argument', () => {
+    expect(cn({ foo: true, bar: true })).toBe('foo bar');
+  });
+
+  test('multiple truthy key-value pairs passed as multiple arguments', () => {
+    expect(cn({ foo: true }, { bar: true })).toBe('foo bar');
+  });
+
+  test('multiple falsy key-value pairs passed as one argument', () => {
+    expect(cn({ foo: false, bar: null, baz: undefined, qux: '', quux: 0 })).toBe('');
+  });
+
+  test('multiple falsy key-value pairs passed as multiple arguments', () => {
+    expect(
+      cn({ foo: false }, { bar: null }, { baz: undefined }, { qux: '' }, { quux: 0 }),
+    ).toBe('');
+  });
+
+  test('mix of truthy and falsy key-value pairs', () => {
+    expect(
+      cn(
+        { foo: true, bar: false },
+        { foo: '', bar: true },
+        { foo: 0, bar: null, baz: true },
+      ),
+    ).toBe('foo bar baz');
+  });
+});
+
 describe('Mixed values', () => {
-  test('mix of strings and falsy values', () => {
+  test('strings and falsy values', () => {
     expect(cn('foo', 'bar', null, undefined, false));
   });
 
-  test('mix of strings and numbers', () => {
+  test('strings and numbers', () => {
     expect(cn('foo', 'bar', 0, 2, -1));
   });
 

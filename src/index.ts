@@ -12,6 +12,14 @@ export default function mergeClassNames(...values: MixedTypeArray): ReturnValue 
         ret.push(...merge(value));
       }
 
+      if (isPlainObject(value)) {
+        Object.entries(value).forEach(([key, value]) => {
+          if (value) {
+            ret.push(key);
+          }
+        });
+      }
+
       if (isValidClassName(value)) {
         ret.push(value);
       }
@@ -20,5 +28,5 @@ export default function mergeClassNames(...values: MixedTypeArray): ReturnValue 
     return ret;
   }
 
-  return merge(values).filter(Boolean).join(' ');
+  return merge(values).join(' ');
 }
