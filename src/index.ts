@@ -1,9 +1,7 @@
 import { isPlainObject, isValidClassName } from './utils';
+import type { MixedTypeArray } from './types';
 
-type ReturnValue = string;
-type MixedTypeArray = any[];
-
-export default function mergeClassNames(...values: MixedTypeArray): ReturnValue {
+export default function mergeClassNames(...values: MixedTypeArray) {
   function merge(values: MixedTypeArray) {
     const ret = [] as MixedTypeArray;
 
