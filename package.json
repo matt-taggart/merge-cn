@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && microbundle",
-    "test": "jest"
+    "test": "jest './src/__tests__'"
   },
   "keywords": [],
   "author": "",

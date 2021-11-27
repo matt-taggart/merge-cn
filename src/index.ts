@@ -1,27 +1,27 @@
-import { isPlainObject, isValidClassName } from './utils';
+import { isPlainObject, isString } from './utils';
 import type { MixedTypeArray } from './types';
 
 export default function mergeClassNames(...values: MixedTypeArray) {
   function merge(values: MixedTypeArray) {
     const ret = [] as MixedTypeArray;
 
-    values.forEach((value) => {
+    let len = values.length;
+    for (let i = 0; i < len; i++) {
+      let value = values[i];
       if (Array.isArray(value)) {
         ret.push(...merge(value));
       }
 
       if (isPlainObject(value)) {
-        Object.entries(value).forEach(([key, value]) => {
-          if (value) {
-            ret.push(key);
-          }
-        });
+        for (const key in value) {
+          value[key] && ret.push(key);
+        }
       }
 
-      if (isValidClassName(value)) {
-        ret.push(value);
+      if (isString(value)) {
+        value && ret.push(value);
       }
-    });
+    }
 
     return ret;
   }
