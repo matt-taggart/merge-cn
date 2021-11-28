@@ -1,4 +1,4 @@
-import cn from '../index.ts';
+import cn from '../index.js';
 
 describe('Strings', () => {
   test('single word string', () => {
@@ -12,15 +12,19 @@ describe('Strings', () => {
   test('multiple string arguments', () => {
     expect(cn('foo', 'bar', 'baz')).toBe('foo bar baz');
   });
+
+  test('multiple string arguments with empty string ', () => {
+    expect(cn('foo', '', 'bar', '', 'baz')).toBe('foo bar baz');
+  });
 });
 
 describe('Numbers', () => {
   test('single number', () => {
-    expect(cn(5)).toBe('');
+    expect(cn(5)).toBe('5');
   });
 
   test('multiple number arguments', () => {
-    expect(cn(5, 7)).toBe('');
+    expect(cn(5, 7)).toBe('5 7');
   });
 });
 
@@ -96,7 +100,7 @@ describe('Object', () => {
   });
 
   test('multiple falsy key-value pairs passed as one argument', () => {
-    expect(cn({ foo: false, bar: null, baz: undefined, qux: '', quux: 0 })).toBe('');
+    expect(cn({ foo: false, bar: null, baz: undefined, qux: '', quux: null })).toBe('');
   });
 
   test('multiple falsy key-value pairs passed as multiple arguments', () => {
@@ -117,17 +121,17 @@ describe('Object', () => {
 });
 
 describe('Mixed values', () => {
-  test('strings and falsy values', () => {
-    expect(cn('foo', 'bar', null, undefined, false));
-  });
-
-  test('strings and numbers', () => {
-    expect(cn('foo', 'bar', 0, 2, -1));
-  });
-
   test('nested array', () => {
-    expect(cn(['foo', [], '', false, undefined, ['bar', null, [], ['baz', 0]]])).toBe(
-      'foo bar baz',
-    );
+    expect(
+      cn([
+        'foo',
+        [],
+        '',
+        { foo: false, bar: true },
+        false,
+        undefined,
+        ['bar', { foo: true, bar: false, baz: true }, null, [], ['baz']],
+      ]),
+    ).toBe('foo bar bar foo baz baz');
   });
 });
