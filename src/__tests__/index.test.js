@@ -1,4 +1,4 @@
-import cn from '../index.ts';
+import cn from '..';
 
 describe('Strings', () => {
   test('single word string', () => {
